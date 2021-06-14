@@ -3,12 +3,13 @@ const express= require('express');
 const server=express();
 const weatherData=require('./data/weather.json');
 const cors = require('cors');
+require('dotenv').config()
 server.use(cors());
 
 
 
 
-const PORT=1996;
+const PORT=process.env.PORT || 1996;
 
 
 
