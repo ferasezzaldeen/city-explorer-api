@@ -35,7 +35,7 @@ server.get('/weather',(req,res)=>{
   let lonreq=req.query.lon;
   let searchQueryreq=req.query.searchQuery;
   let weatherItem= weatherData.find(item=>{
-    if((item.lat==latreq&&item.lon==lonreq)||( item.city_name.toLowerCase==searchQueryreq))
+    if((item.lat==latreq&&item.lon==lonreq)||( item.city_name==searchQueryreq.toLowerCase()))
     return item;
 
   });
