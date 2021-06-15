@@ -35,7 +35,7 @@ server.get('/weather',(req,res)=>{
   let lonreq=req.query.lon;
   let searchQueryreq=req.query.searchQuery;
   let weatherItem= weatherData.find(item=>{
-    if((item.lat==latreq&&item.lon==lonreq)||(item.city_name==searchQueryreq))
+    if((item.lat==latreq&&item.lon==lonreq)||( item.city_name.toLowerCase==searchQueryreq))
     return item;
 
   });
@@ -48,7 +48,7 @@ server.get('/weather',(req,res)=>{
     res.send(forecasts);
   }
   catch
-   {
+  {
     res.status(404).send('OPS!! Your City Not Found');
   }
 
