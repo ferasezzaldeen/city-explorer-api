@@ -3,14 +3,14 @@ const express= require('express');
 const server=express();
 
 const cors = require('cors');
-const { default: axios } = require('axios');
+const axios= require('axios');
 require('dotenv').config();
 server.use(cors());
 
 
 
 
-const PORT=process.env.PORT;
+const PORT=process.env.PORT || 1996;
 
 
 
