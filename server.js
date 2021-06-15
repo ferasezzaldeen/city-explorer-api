@@ -1,16 +1,14 @@
 'use strict';
+require('dotenv').config();
 const express= require('express');
-const server=express();
-
 const cors = require('cors');
 const axios= require('axios');
-require('dotenv').config();
+const server=express();
 server.use(cors());
-
-
-
-
 const PORT=process.env.PORT || 1996;
+
+
+
 
 
 
@@ -52,7 +50,7 @@ function getWeather (req,res){
   // let latreq=req.query.lat;
   // let lonreq=req.query.lon;
   let searchQueryreq=req.query.searchQuery;
-  let KEY=process.env.WEATHER_API_KEY;
+  const KEY=process.env.WEATHER_API_KEY;
   let url=`https://api.weatherbit.io/v2.0/forecast/daily?city=${searchQueryreq}&key=${KEY}`;
   axios.get(url).then(apiResults=>{
     const forecasts = apiResults.data.data.map(item => {
@@ -67,7 +65,7 @@ function getWeather (req,res){
 
 function getMovie(req,res){
   let searchQueryreq=req.query.searchQuery;
-  let KEY=process.env.MOVIE_API_KEY;
+  const KEY=process.env.MOVIE_API_KEY;
   let url=`https://api.themoviedb.org/3/search/movie?api_key=${KEY}&query==${searchQueryreq}`;
   axios.get(url).then(apiResults=>{
     const movInfo= apiResults.data.results.map(item =>{
