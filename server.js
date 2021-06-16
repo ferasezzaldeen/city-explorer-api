@@ -38,7 +38,7 @@ class Movies {
 
 
 
-server.listen(1996,()=>{
+server.listen(PORT,()=>{
   console.log(`im using port ${PORT}`);
 });
 
