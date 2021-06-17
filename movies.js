@@ -1,38 +1,56 @@
-const axios= require('axios');
+const axios = require('axios');
 
 
 class Movies {
-    constructor(object){
-  
-      this.title=object.title;
-      this.overview=object.overview;
-      this.average_votes=object.vote_average;
-      this.total_votes=object.vote_count;
-      this.image_url=`https://image.tmdb.org/t/p/w500${object.poster_path}`;
-      this.popularity=object.popularity;
-      this.released_on=object.release_date;
-    }
-  
-  
+  constructor(object) {
+
+    this.title = object.title;
+    this.overview = object.overview;
+    this.average_votes = object.vote_average;
+    this.total_votes = object.vote_count;
+    this.image_url = `https://image.tmdb.org/t/p/w500${object.poster_path}`;
+    this.popularity = object.popularity;
+    this.released_on = object.release_date;
   }
-  
 
 
-  function getMovie(req,res){
-    let searchQueryreq=req.query.searchQuery;
-    const KEY=process.env.MOVIE_API_KEY;
-    let url=`https://api.themoviedb.org/3/search/movie?api_key=${KEY}&query==${searchQueryreq}`;
-    axios.get(url).then(apiResults=>{
-      const movInfo= apiResults.data.results.map(item =>{
-        {return new Movies(item);}
+}
+
+let myMemory = {};
+
+
+
+function getMovie(req, res) {
+  let searchQueryreq = req.query.searchQuery;
+  const KEY = process.env.MOVIE_API_KEY;
+
+  if (myMemory[searchQueryreq] !== undefined) {
+    res.send(myMemory[searchQueryreq]);
+    console.log('my momery is working')
+  }
+  else {
+
+    let url = `https://api.themoviedb.org/3/search/movie?api_key=${KEY}&query==${searchQueryreq}`;
+    axios.get(url).then(apiResults => {
+      const movInfo = apiResults.data.results.map(item => {
+        { return new Movies(item); }
       });
       res.send(movInfo);
-  
+      myMemory[searchQueryreq]=movInfo;
     })
-      .catch(err =>{
-        res.send(`there is an error in getting the data => ${err}`);});
-  
-  
+      .catch(err => {
+        res.send(`there is an error in getting the data => ${err}`);
+      });
+
+
+
   }
-  
-module.exports=getMovie;  
+
+
+
+
+
+
+}
+
+module.exports = getMovie;
